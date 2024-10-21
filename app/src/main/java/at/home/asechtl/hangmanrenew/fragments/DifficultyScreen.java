@@ -13,12 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.home.asechtl.hangmanrenew.R;
+import at.home.asechtl.hangmanrenew.database.GuessWord;
+import at.home.asechtl.hangmanrenew.database.ListDatabase;
 import at.home.asechtl.hangmanrenew.databinding.FragmentDifficultyScreenBinding;
+import at.home.asechtl.hangmanrenew.enums.Difficulty;
 import at.home.asechtl.hangmanrenew.viewModel.MainViewModel;
 
 
 public class DifficultyScreen extends Fragment {
     FragmentDifficultyScreenBinding binding;
+    private GuessWord guessWordInstance;
+    private ListDatabase listDatabaseInstance;
+
+    private static List<GuessWord>listAll;
+    private static List<GuessWord>listHard;
+    private static List<GuessWord>listSimple;
 
     public DifficultyScreen() {
         // Required empty public constructor
@@ -37,15 +46,27 @@ public class DifficultyScreen extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentDifficultyScreenBinding.inflate(inflater, container, false);
         MainViewModel viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        guessWordInstance = new GuessWord("test", Difficulty.Simple);
+        listDatabaseInstance = new ListDatabase();
+        listHard = new ArrayList<>();
+        listSimple = new ArrayList<>();
+        listAll = listDatabaseInstance.createList();
 
 
-
+        for (int i = 0; i < listAll.size(); i ++){
+            GuessWord temp = listAll.get(i);
+            if (temp.getDifficulty().equals(Difficulty.Hard)){
+                listHard.add(temp);
+            } else if (temp.getDifficulty().equals(Difficulty.Simple)) {
+                listSimple.add(temp);
+            }
+        }
         binding.btLevelEasy.setOnClickListener(s -> {
-            GuessWordLogic.setGuessWordList(listSimple);
+            ListDatabase.setListRightNow(listSimple);
             viewModel.show_GameViewScreen();
         });
         binding.btLevelHard.setOnClickListener(s -> {
-            GuessWordLogic.setGuessWordList(listHard);
+            ListDatabase.setListRightNow(listHard);
             viewModel.show_GameViewScreen();
         });
 

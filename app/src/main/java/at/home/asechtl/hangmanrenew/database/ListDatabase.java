@@ -7,6 +7,8 @@ import at.home.asechtl.hangmanrenew.enums.Difficulty;
 
 public class ListDatabase {
     private static List<GuessWord>list = new ArrayList<>();
+    private static List<GuessWord>listRightNow = new ArrayList<>();
+    private static String wordToGuessRightNow = null;
 
     public List<GuessWord> createList(){
         list.add(new GuessWord("Eisenbahn", Difficulty.Hard));
@@ -43,11 +45,27 @@ public class ListDatabase {
         return list;
     }
 
+    public static String getWordToGuessRightNow() {
+        return wordToGuessRightNow;
+    }
+
+    public static void setWordToGuessRightNow(String wordToGuessRightNow) {
+        ListDatabase.wordToGuessRightNow = wordToGuessRightNow;
+    }
+
     public static List<GuessWord> getList() {
         return list;
     }
 
     public static void setList(List<GuessWord> list) {
         ListDatabase.list = list;
+    }
+
+    public static List<GuessWord> getListRightNow() {
+        return listRightNow;
+    }
+
+    public static void setListRightNow(List<GuessWord> listRightNow) {
+        ListDatabase.listRightNow = listRightNow;
     }
 }
